@@ -1,9 +1,9 @@
-import './App.css';
+import Main from './components/Main'
 
 function App() {
   return (
-    <div className="App">
-      <h1>Calendar</h1>
+    <div >
+      <Main />
     </div>
   );
 }
