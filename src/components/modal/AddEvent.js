@@ -1,10 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import EventForm from './EventForm'
 
 const AddEvent = () => {
-    const inputChange = event => { };
+    const [color, setColor] = useState('')
+    const [eventName, setEventName] = useState('')
+    const [checkbox, setCheckbox] = useState(false)
+    const [showTime, setShowTime] = useState(new Date())
+    const [endDate, setEndDate] = useState(new Date())
+
+
+    const inputChange = event => {
+        setEventName(event.target.value)
+    };
+
     const onInputChange = input => { };
-    const onCheckboxChange = () => { };
+
+    const onCheckboxChange = event => {
+        if (event.target.checked == true) {
+            setShowTime(true);
+            setCheckbox(true);
+        } else {
+            setShowTime(false);
+            setCheckbox(false);
+        }
+    };
+
     const handleChange = () => { };
     const closeModal = () => { };
     const createEvent = () => { };
@@ -14,12 +34,12 @@ const AddEvent = () => {
                 modalId='add-event'
                 title='Add Event'
                 closeModal={closeModal}
-                eventName='Watch Movies'
-                checkbox={false}
+                eventName={eventName}
+                checkbox={checkbox}
                 onCheckboxChange={onCheckboxChange}
-                showTime={false}
+                showTime={showTime}
                 startDate={new Date()}
-                endDate={new Date()}
+                endDate={endDate}
                 color='Primary'
                 colors={['Primary', 'Danger']}
                 inputChange={inputChange}
