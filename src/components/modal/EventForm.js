@@ -21,7 +21,6 @@ const EventForm = props => {
         handleChange,
         eventType,
         buttonText,
-        colorObj,
     } = props;
     return (
         <div>
@@ -128,9 +127,10 @@ const EventForm = props => {
                             <button
                                 type="button"
                                 className="btn btn-primary save"
-                                data-dismiss='modal'>
+                                data-dismiss='modal'
                                 onClick={eventType}
                                 disabled={!eventName || !startDate || !endDate || !color}
+                            >
                                 {buttonText}
                             </button>
                             <button
