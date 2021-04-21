@@ -4,7 +4,7 @@ import AppReducer from './appReducer';
 import AppContext from './appContext'
 import { useLocalStorage } from '../hooks/storage';
 
-import { ADD_EVENT } from './types';
+import { ADD_EVENT, GET_EVENTS } from './types';
 
 const AppState = props => {
     const initialState = {
@@ -15,6 +15,7 @@ const AppState = props => {
 
     const [state, dispatch] = useReducer(AppReducer, initialState)
     const [item, setValue] = useLocalStorage('events');
+    console.log('item', item)
 
     const addEvent = event => {
         let userEvents = [...state.events];
@@ -25,6 +26,17 @@ const AppState = props => {
             payload: userEvents,
         });
     }
+
+    // get all events from local storage
+    const getEvents = () => {
+        if (item) {
+            dispatch({
+                type: GET_EVENTS,
+                payload: item
+            });
+        }
+    }
+
     return (
         <AppContext.Provider
             value={{
@@ -32,6 +44,7 @@ const AppState = props => {
                 colors: state.colors,
                 selectedEvent: state.selectedEvent,
                 addEvent,
+                getEvents,
             }}
         >
             {props.children}

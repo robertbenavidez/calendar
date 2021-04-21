@@ -85,7 +85,7 @@ const EventForm = props => {
                                     </div>
                                 </div>
                                 <div className='form-group'>
-                                    <label classNam='control-label'>End</label>
+                                    <label className='control-label'>End</label>
                                     <div className='row'>
                                         {
                                             !showTime ?

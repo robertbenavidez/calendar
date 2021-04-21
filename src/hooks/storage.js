@@ -3,7 +3,7 @@ import { useState } from 'react';
 export const useLocalStorage = (key, initialValue) => {
     const [item, setItemValue] = useState(() => {
         try {
-            return window.localStoarge.getItem(key)
+            return window.localStorage.getItem(key)
                 ? JSON.parse(window.localStorage.getItem(key))
                 : initialValue;
         } catch (error) {
