@@ -2,11 +2,12 @@ import React, { useContext } from 'react'
 import AddEvent from '../modal/AddEvent'
 
 import AppContext from '../../context/appContext'
+import SelectModal from '../modal/SelectModal';
 
 const Sidebar = () => {
 
     const appContext = useContext(AppContext);
-    const { events } = appContext;
+    const { events, selected } = appContext;
 
     return (
         <div className='col-lg-3'>
@@ -22,6 +23,9 @@ const Sidebar = () => {
                             <div
                                 className={`external-event bg-${event.bgColor}`}
                                 key={event.id + index}
+                                onClick={() => selected(event)}
+                                data-toggle="modal"
+                                data-target="#selection-modal"
                             >
                                 {event.title}
                             </div>
@@ -30,6 +34,7 @@ const Sidebar = () => {
                 }
 
                 <AddEvent />
+                <SelectModal />
             </div>
         </div>
     )
