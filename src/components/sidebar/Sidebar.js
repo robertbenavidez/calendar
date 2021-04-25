@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
-import AddEvent from '../modal/AddEvent'
 
-import AppContext from '../../context/appContext'
+import AddEvent from '../modal/AddEvent'
+import EditEvent from '../modal/EditEvent'
 import SelectModal from '../modal/SelectModal';
+import AppContext from '../../context/appContext'
 
 const Sidebar = () => {
 
@@ -35,6 +36,7 @@ const Sidebar = () => {
 
                 <AddEvent />
                 <SelectModal />
+                <EditEvent />
             </div>
         </div>
     )

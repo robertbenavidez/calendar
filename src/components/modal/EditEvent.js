@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import EventForm from './EventForm'
 import moment from 'moment'
 import AppContext from '../../context/appContext';
 
-const AddEvent = () => {
+const EditEvent = () => {
     const [color, setColor] = useState('')
     const [eventName, setEventName] = useState('')
     const [checkbox, setCheckbox] = useState(false)
@@ -12,9 +12,9 @@ const AddEvent = () => {
     const [endDate, setEndDate] = useState(new Date())
 
     const appContext = useContext(AppContext)
-    const { addEvent, events, colors, colorObj } = appContext;
+    const { events, colors, selectedEvent, colorObj, editSelectedEvent } = appContext;
 
-    // const colors = ['Primary', 'Success', 'Info', 'Warning', 'Danger']
+
     // const colorObj = {
     //     primary: '#0275d8',
     //     success: '#5cb85c',
@@ -23,6 +23,26 @@ const AddEvent = () => {
     //     danger: '#d9534f'
     // }
 
+    useEffect(() => {
+        if (Object.keys(selectedEvent).length > 0) {
+            setColor(selectedEvent.bgColor);
+            setEventName(selectedEvent.title);
+            setCheckbox(selectedEvent.allDay);
+            let start = '';
+            let end = '';
+            if (!selectedEvent.allDay) {
+                setShowTime(false)
+                start = `${moment(new Date(selectedEvent.start)).format()}`;
+                end = `${moment(new Date(selectedEvent.end)).format()}`
+            } else {
+                setShowTime(true)
+                start = `${moment(new Date(selectedEvent.start)).format('YYYY-MM-DD')}`;
+                end = `${moment(new Date(selectedEvent.end)).format('YYYY-MM-DD')}`
+            }
+            setStartDate(new Date(start));
+            setEndDate(new Date(end))
+        }
+    }, [selectedEvent, events])
 
 
     const inputChange = event => {
@@ -59,24 +79,14 @@ const AddEvent = () => {
     };
 
     const closeModal = () => {
-        reset()
+
     };
 
-    const createEvent = () => {
-        const event = setEvent(events.length + 1)
-        // add event to events array using context api
-        addEvent(event);
-        reset();
-    };
-
-    const reset = () => {
-        setColor('')
-        setEventName('')
-        setCheckbox(false)
-        setShowTime(false)
-        setStartDate(new Date())
-        setEndDate(new Date())
+    const editEvent = () => {
+        const event = setEvent(selectedEvent.id)
+        editSelectedEvent(event)
     }
+
 
     const setEvent = id => {
         let start = '';
@@ -94,17 +104,16 @@ const AddEvent = () => {
             title: eventName,
             start,
             end,
-            allDay: checkbox,
             bgColor: color,
             backgroundColor: colorObj[color]
         }
         return event;
     }
     return (
-        <div >
+        <>
             <EventForm
-                modalId='add-event'
-                title='Add Event'
+                modalId='edit-event'
+                title='Edit Event'
                 closeModal={closeModal}
                 eventName={eventName}
                 checkbox={checkbox}
@@ -114,15 +123,15 @@ const AddEvent = () => {
                 endDate={endDate}
                 color={color}
                 colors={colors}
+                colorObj={colorObj}
                 inputChange={inputChange}
                 handleChange={handleChange}
                 onInputChange={onInputChange}
-                eventType={createEvent}
-                colorObj={colorObj}
-                buttonText='Save'
+                eventType={editEvent}
+                buttonText='Update'
             />
-        </div>
+        </>
     )
 }
 
-export default AddEvent;
+export default EditEvent;

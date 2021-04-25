@@ -4,13 +4,20 @@ import AppReducer from './appReducer';
 import AppContext from './appContext'
 import { useLocalStorage } from '../hooks/storage';
 
-import { ADD_EVENT, GET_EVENTS, SELECT_EVENT } from './types';
+import { ADD_EVENT, GET_EVENTS, SELECT_EVENT, EDIT_EVENT } from './types';
 
 const AppState = props => {
     const initialState = {
         events: [],
         colors: ['Primary', 'Success', 'Info', 'Warning', 'Danger'],
-        selectedEvent: {}
+        selectedEvent: {},
+        colorObj: {
+            primary: '#0275d8',
+            success: '#5cb85c',
+            info: '#5bc0de',
+            warning: '#f0ad4e',
+            danger: '#d9534f'
+        }
     };
 
     const [state, dispatch] = useReducer(AppReducer, initialState)
@@ -47,15 +54,29 @@ const AppState = props => {
         })
     }
 
+    // Edit selected event
+    const editSelectedEvent = event => {
+        const newEvents = item.map(e => {
+            return e.id === event.id ? event : e;
+        });
+        setValue(newEvents);
+        dispatch({
+            type: EDIT_EVENT,
+            payload: newEvents
+        });
+    }
+
     return (
         <AppContext.Provider
             value={{
                 events: state.events,
                 colors: state.colors,
                 selectedEvent: state.selectedEvent,
+                colorObj: state.colorObj,
                 addEvent,
                 getEvents,
-                selected
+                selected,
+                editSelectedEvent
             }}
         >
             {props.children}

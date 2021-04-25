@@ -21,6 +21,7 @@ const EventForm = props => {
         handleChange,
         eventType,
         buttonText,
+        colorObj
     } = props;
     return (
         <div>
@@ -112,7 +113,13 @@ const EventForm = props => {
                                 </div>
                                 <div className='form-group'>
                                     <label className='control-label'>Choose Event Color</label>
-                                    <select className='form-control form-white' name='event-color' onChange={handleChange}>
+                                    <select
+                                        className='form-control form-white'
+                                        name='event-color'
+                                        value={color}
+                                        onChange={handleChange}
+                                        style={{ 'backgroundColor': color[color] }}
+                                    >
                                         <option>Select Color</option>
                                         {
                                             colors.map(color =>

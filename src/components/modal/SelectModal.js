@@ -17,7 +17,17 @@ const SelectModal = () => {
                         </div>
                         <div className="modal-footer">
                             <div className="text-center">
-                                <button type="button" className="btn btn-primary">Edit Event</button>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#edit-event"
+                                    data-dismiss="modal"
+
+
+                                >
+                                    Edit Event
+                                </button>
                                 <button type="button" className="btn btn-danger" data-dismiss="modal">Delete</button>
                             </div>
                         </div>
