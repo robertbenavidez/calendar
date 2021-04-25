@@ -4,7 +4,7 @@ import AppReducer from './appReducer';
 import AppContext from './appContext'
 import { useLocalStorage } from '../hooks/storage';
 
-import { ADD_EVENT, GET_EVENTS, SELECT_EVENT, EDIT_EVENT } from './types';
+import { ADD_EVENT, GET_EVENTS, SELECT_EVENT, EDIT_EVENT, DELETE_EVENT } from './types';
 
 const AppState = props => {
     const initialState = {
@@ -66,6 +66,16 @@ const AppState = props => {
         });
     }
 
+    // Delete selected event
+    const deleteSelectedEvent = event => {
+        const newEventArray = item.filter(e => e.id !== event.id);
+        setValue(newEventArray);
+        dispatch({
+            type: DELETE_EVENT,
+            payload: newEventArray
+        })
+    }
+
     return (
         <AppContext.Provider
             value={{
@@ -76,7 +86,8 @@ const AppState = props => {
                 addEvent,
                 getEvents,
                 selected,
-                editSelectedEvent
+                editSelectedEvent,
+                deleteSelectedEvent
             }}
         >
             {props.children}
